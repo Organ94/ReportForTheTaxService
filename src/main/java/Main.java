@@ -13,13 +13,13 @@ public class Main {
         for (Thread s : shopList) {
             s.join();
         }
-        System.out.println("Выручка всех магазинов за " + ARRAY_SIZE + " дней: " + shop.atomicLong.get());
+        System.out.println("Выручка всех магазинов за " + ARRAY_SIZE + " дней: " + shop.longAdder.sum());
     }
 
     private static List<Thread> creatingStores(int numberOfStores, int arraySize, Shop shop) {
         List<Thread> shopList = new ArrayList<>();
         for (int i = 0; i < numberOfStores; i++) {
-            shopList.add(new Thread(null, () -> shop.Tax(arraySize), "Shop-" + i));
+            shopList.add(new Thread(null, () -> shop.tax(arraySize), "Shop-" + i));
             shopList.get(i).start();
         }
         return shopList;
